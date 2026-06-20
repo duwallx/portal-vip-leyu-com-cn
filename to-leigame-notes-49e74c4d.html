@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>雷竞技 · 赛事信息平台</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #fdf3e9 0%, #fbe4d0 45%, #f5d0b0 100%);
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1.5rem;
+      line-height: 1.6;
+      color: #2f2b26;
+    }
+
+    .page-wrap {
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* 主卡片容器 */
+    .card-set {
+      background: #fffdfa;
+      border-radius: 40px;
+      box-shadow: 0 20px 40px -12px rgba(140, 90, 50, 0.18), 0 6px 16px -6px rgba(140, 90, 50, 0.08);
+      padding: 2.5rem 2.5rem 3rem;
+      backdrop-filter: blur(2px);
+      transition: box-shadow 0.25s;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1.2rem 1rem;
+      }
+      .card-set {
+        padding: 1.8rem 1.5rem 2.5rem;
+        border-radius: 28px;
+      }
+    }
+
+    /* 主视觉轻标题 */
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #b3825c;
+      background: #f5e4d4;
+      padding: 0.25rem 1rem;
+      border-radius: 30px;
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #321f14;
+      margin-bottom: 0.6rem;
+      line-height: 1.2;
+    }
+
+    .sub-lead {
+      font-size: 1.1rem;
+      color: #5d4a39;
+      margin-bottom: 2.2rem;
+      border-left: 3px solid #e1b692;
+      padding-left: 1.2rem;
+      background: #fcf5ee;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .sub-lead p {
+      max-width: 85%;
+    }
+
+    /* 信息卡片网格 —— 用途卡片 + 人群卡片 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+      margin: 2.5rem 0 2rem;
+    }
+
+    @media (max-width: 640px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 1.4rem;
+      }
+    }
+
+    .info-card {
+      background: #fcf7f1;
+      border-radius: 24px;
+      padding: 1.6rem 1.6rem 1.8rem;
+      border: 1px solid #efe2d4;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .info-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px -10px rgba(120, 75, 40, 0.12);
+    }
+
+    .info-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #3e2b1d;
+      margin-bottom: 0.9rem;
+      letter-spacing: -0.01em;
+    }
+
+    .info-card h3 span {
+      background: #e8cfb9;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    .info-card p {
+      font-size: 0.96rem;
+      color: #4e3d2e;
+      margin-bottom: 0.6rem;
+    }
+
+    .info-card .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.7rem;
+      margin-top: 0.8rem;
+    }
+
+    .tag-list .tag {
+      background: #e6d7c7;
+      color: #35261b;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-weight: 500;
+    }
+
+    /* 自然链接段落 */
+    .link-paragraph {
+      background: #f8efe6;
+      border-radius: 28px;
+      padding: 1.8rem 2rem;
+      margin: 2rem 0 1.2rem;
+      border: 1px solid #eddccc;
+    }
+
+    .link-paragraph p {
+      font-size: 1rem;
+      color: #3f332a;
+      margin-bottom: 0.5rem;
+    }
+
+    .link-paragraph a {
+      color: #904e1f;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 2px solid #d6b292;
+      transition: border-color 0.2s, color 0.2s;
+      padding-bottom: 0.05rem;
+    }
+
+    .link-paragraph a:hover {
+      border-bottom-color: #904e1f;
+      color: #5f3419;
+    }
+
+    /* 自然链接段落2 (不同位置) */
+    .inline-link-block {
+      margin: 1.5rem 0 0.8rem;
+      font-size: 0.98rem;
+      background: #fffbf8;
+      padding: 1.2rem 1.8rem;
+      border-radius: 60px 20px 20px 60px;
+      border: 1px solid #eedccb;
+      display: inline-block;
+      width: auto;
+    }
+
+    .inline-link-block a {
+      color: #86451b;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1.5px solid #dbb79a;
+      transition: border 0.2s;
+    }
+
+    .inline-link-block a:hover {
+      border-bottom-color: #86451b;
+    }
+
+    /* FAQ 摘要 */
+    .faq-mini {
+      margin: 2.5rem 0 1rem;
+      border-top: 1px solid #ead9c8;
+      padding-top: 1.8rem;
+    }
+
+    .faq-mini h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #4f3826;
+      margin-bottom: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .faq-item {
+      margin-bottom: 1rem;
+      padding-left: 0.2rem;
+    }
+
+    .faq-question {
+      font-weight: 600;
+      color: #3e2c1d;
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 0.95rem;
+    }
+
+    .faq-answer {
+      color: #5b4a3a;
+      font-size: 0.9rem;
+      padding-left: 0.5rem;
+      border-left: 2px solid #dbbc9f;
+      padding-left: 0.9rem;
+    }
+
+    .foot-note {
+      margin-top: 2.8rem;
+      font-size: 0.8rem;
+      color: #9e8b79;
+      text-align: center;
+      border-top: 1px solid #e7d6c4;
+      padding-top: 1.8rem;
+      letter-spacing: 0.3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <div class="card-set">
+      
+      <!-- 主视觉 -->
+      <div class="hero-tag">⚡ 竞技 · 观察 · 分享</div>
+      <h1>雷竞技 · 不只是比分</h1>
+      <div class="sub-lead">
+        <p>围绕赛事信息、选手动态与竞技趋势，慢慢搭建起一个属于爱好者的角落。</p>
+      </div>
+
+      <!-- 信息卡片：用途 + 适合人群 -->
+      <div class="card-grid">
+        <div class="info-card">
+          <h3><span></span> 用途卡片</h3>
+          <p>你可以在这里找到赛事时间、版本变动、队伍近况，以及一些不那么严肃的赛后闲谈。页面简洁，加载快，适合快速浏览。</p>
+          <p>没有弹窗，没有自动播放的视频，内容按卡片和段落整理——就像翻开一本赛事手册。</p>
+          <div class="tag-list">
+            <span class="tag">赛程</span>
+            <span class="tag">阵容</span>
+            <span class="tag">数据</span>
+            <span class="tag">简析</span>
+          </div>
+        </div>
+        <div class="info-card">
+          <h3><span></span> 适合人群</h3>
+          <p>刚开始关注竞技的新人、想快速了解赛况的观众、喜欢阅读赛事回顾的爱好者。不需要你懂太多术语，信息自然展开。</p>
+          <p>如果你只是想在休息时看两眼比赛资讯，这里没有信息过载的压迫感。</p>
+          <div class="tag-list">
+            <span class="tag">轻度观众</span>
+            <span class="tag">赛事读者</span>
+            <span class="tag">策略爱好者</span>
+            <span class="tag">好奇玩家</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 自然链接段落 1 -->
+      <div class="link-paragraph">
+        <p>很多赛事内容散落在不同平台，查找起来费时。而 <a href="https://to-leigame.com">雷竞技</a> 尝试把关键信息收拢到一处：每周赛程、队伍变动、版本更新摘要，都用简洁的卡片展示。你不需要频繁切换页面，就能对当前赛季有个基本印象。</p>
+        <p>如果你也喜欢赛前看看阵容、赛后翻翻简短复盘，或许这里能成为你的一个常驻书签。</p>
+      </div>
+
+      <!-- 自然链接段落 2（不同位置、不同句式） -->
+      <div class="inline-link-block">
+        🏷️ 从赛前预测到赛后数据，<a href="https://to-leigame.com">雷竞技</a> 用一种更安静的方式整理竞技内容。
+      </div>
+
+      <!-- FAQ 摘要 -->
+      <div class="faq-mini">
+        <h4>❓ 常见疑问 · 简短摘要</h4>
+        <div class="faq-item">
+          <span class="faq-question">这里主要关注哪些项目？</span>
+          <div class="faq-answer">目前以主流团队竞技项目为主，包括联赛、杯赛及部分国际赛事。内容偏信息整合，不涉及实时直播。</div>
+        </div>
+        <div class="faq-item">
+          <span class="faq-question">信息更新频率如何？</span>
+          <div class="faq-answer">通常在每个比赛日前后更新赛果、次日赛程以及值得关注的选手状态。休赛期会发布版本变化梳理。</div>
+        </div>
+        <div class="faq-item">
+          <span class="faq-question">需要注册或登录吗？</span>
+          <div class="faq-answer">不需要。所有公开页面均可直接阅读，没有用户系统，也没有评论区和推送通知。</div>
+        </div>
+      </div>
+
+      <!-- 结尾轻提示 -->
+      <div class="foot-note">
+        <span>以卡片和段落承载信息，不追逐热点，只整理事实。</span>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
