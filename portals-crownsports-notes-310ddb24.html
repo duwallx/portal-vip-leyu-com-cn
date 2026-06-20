@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>皇冠体育 · 运动资讯聚合</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f4f8fb;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1a2b3c;
+            line-height: 1.55;
+            padding: 0 1rem 2.5rem;
+        }
+        .page {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        /* hero */
+        .hero {
+            background: linear-gradient(145deg, #0b2b3f 0%, #1a5b6e 100%);
+            margin: 1.8rem -1rem 2.5rem;
+            padding: 3.8rem 2rem 3.2rem;
+            text-align: center;
+            color: #e6f2f5;
+            border-radius: 0 0 48px 48px;
+            box-shadow: 0 10px 20px rgba(0,40,50,0.12);
+            position: relative;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: #f4f8fb;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 20'%3E%3Cpath d='M0,20L600,0L1200,20Z' fill='%23f4f8fb'/%3E%3C/svg%3E") no-repeat bottom;
+            mask-size: cover;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #c3e4ed, #e9f7fb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.6rem;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 680px;
+            margin: 0 auto;
+            opacity: 0.88;
+            font-weight: 350;
+        }
+
+        /* grid cards */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.8rem;
+            margin: 2.5rem 0 3rem;
+        }
+        @media (min-width: 680px) {
+            .grid-cards { grid-template-columns: 1fr 1fr; }
+        }
+        @media (min-width: 1024px) {
+            .grid-cards { grid-template-columns: 1fr 1fr 1fr; }
+        }
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 1.8rem 1.5rem 2rem;
+            box-shadow: 0 6px 16px rgba(0, 40, 50, 0.06);
+            border-left: 5px solid #1f7a8c;
+            transition: transform 0.15s ease, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(0, 60, 70, 0.10);
+        }
+        .card h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0b3b4a;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card h2 span {
+            background: #d4e9f0;
+            border-radius: 40px;
+            padding: 0.1rem 0.65rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #0a4b5c;
+        }
+        .card p {
+            color: #2c4454;
+            font-size: 0.96rem;
+            margin-bottom: 0.8rem;
+        }
+        .card ul {
+            list-style: none;
+            padding-left: 0.2rem;
+        }
+        .card li {
+            position: relative;
+            padding-left: 1.2rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.94rem;
+            color: #1d4d5e;
+        }
+        .card li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: #1f8a9e;
+            font-weight: 600;
+        }
+
+        /* 背景说明区块 —— 混合布局 */
+        .context-block {
+            background: #e8f2f6;
+            border-radius: 28px;
+            padding: 2rem 1.8rem;
+            margin: 2rem 0 2.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem 2rem;
+            border: 1px solid #c3d9e2;
+        }
+        .context-block .stat {
+            flex: 1 1 180px;
+        }
+        .context-block .stat h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0b4b5c;
+            border-bottom: 2px solid #7ebccc;
+            display: inline-block;
+            padding-bottom: 0.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .context-block .stat p {
+            font-size: 0.96rem;
+            color: #1a3b48;
+            max-width: 380px;
+        }
+
+        /* 引用 / 摘要 */
+        .faq-summary {
+            background: white;
+            border-radius: 20px;
+            padding: 1.6rem 1.8rem;
+            margin: 2.2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 30, 40, 0.04);
+            border: 1px solid #d8e9ef;
+        }
+        .faq-summary h3 {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: #0b3f4f;
+            margin-bottom: 1rem;
+        }
+        .faq-item {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 0.9rem;
+            align-items: baseline;
+        }
+        .faq-item .q {
+            font-weight: 600;
+            color: #1a6577;
+            min-width: 80px;
+        }
+        .faq-item .a {
+            color: #2a4b5a;
+        }
+
+        /* 尾页提示 */
+        .footer-note {
+            margin: 3rem 0 1.2rem;
+            padding: 1.6rem 1.2rem;
+            background: #daeaf1;
+            border-radius: 48px;
+            text-align: center;
+            color: #0b3746;
+            font-size: 0.98rem;
+            border: 1px solid #bbd5e0;
+        }
+        .footer-note a {
+            color: #135e72;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid #75b7c9;
+            transition: border-color 0.2s;
+        }
+        .footer-note a:hover {
+            border-bottom-color: #0b4d5e;
+        }
+
+        .fine-print {
+            text-align: center;
+            font-size: 0.78rem;
+            color: #5a7a88;
+            margin-top: 1.8rem;
+            border-top: 1px dashed #bbd2dc;
+            padding-top: 1.2rem;
+        }
+
+        /* 响应式微调 */
+        @media (max-width: 480px) {
+            .hero { padding: 2.8rem 1.2rem 2.6rem; }
+            .hero h1 { font-size: 1.8rem; }
+            .card { padding: 1.5rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- hero -->
+    <header class="hero">
+        <h1>皇冠体育 · 信息档案</h1>
+        <p>赛事资料聚合 · 运动索引 · 数据备忘</p>
+    </header>
+
+    <!-- 背景说明 + 资料整理角度 -->
+    <div class="context-block">
+        <div class="stat">
+            <h3>平台背景</h3>
+            <p>皇冠体育长期聚焦体育资讯与赛事数据结构化，覆盖多项运动与联赛的实时信息整合。页面信息整理自公开数据与行业资料，仅供索引参考。</p>
+        </div>
+        <div class="stat">
+            <h3>资料维度</h3>
+            <p>包含联赛赛程、队伍统计、历史交锋、场地天气、伤病简报等分类模块。所有内容均以整理与归纳为出发点，不构成任何预测或建议。</p>
+        </div>
+        <div class="stat">
+            <h3>使用方式</h3>
+            <p>通过分类标签与时间轴筛选可缩小范围，适合需要快速查阅体育基本面信息的用户。</p>
+        </div>
+    </div>
+
+    <!-- 三段自然介绍 + 网格卡片 -->
+    <div class="grid-cards">
+        <!-- card 1 -->
+        <div class="card">
+            <h2>🏟️ 联赛档案 <span>索引</span></h2>
+            <p>按赛季整理各主要联赛的积分走势、进球分布、红黄牌统计等结构化表格。数据源经多轮交叉比对，重点标注异常波动区间。</p>
+            <ul>
+                <li>近五轮攻防效率雷达</li>
+                <li>主客场胜率离散图</li>
+                <li>裁判尺度与场均犯规</li>
+            </ul>
+        </div>
+        <!-- card 2 -->
+        <div class="card">
+            <h2>📋 队伍简报 <span>备忘</span></h2>
+            <p>每支球队的近期阵容轮换、核心球员出场频率、战术阵型变化。信息来自公开录像与赛事报告，适合赛前快速浏览。</p>
+            <ul>
+                <li>预计首发与伤疑名单</li>
+                <li>边中结合 vs 防反倾向</li>
+                <li>近6场相同盘路统计</li>
+            </ul>
+        </div>
+        <!-- card 3 -->
+        <div class="card">
+            <h2>⚡ 赛前环境 <span>快照</span></h2>
+            <p>比赛日天气、场地草皮状况、飞行距离、休整天数等非技战术因素。部分数据由合作气象站点提供，更新频率为赛前12小时。</p>
+            <ul>
+                <li>温度与降水概率</li>
+                <li>海拔与湿度影响</li>
+                <li>周中/周末日程密度</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- FAQ摘要 / 常见资料条目 -->
+    <div class="faq-summary">
+        <h3>📌 资料索引·常见条目</h3>
+        <div class="faq-item">
+            <span class="q">数据更新：</span>
+            <span class="a">赛事数据通常于赛后2小时内入库；联赛积分每日上午更新。</span>
+        </div>
+        <div class="faq-item">
+            <span class="q">覆盖范围：</span>
+            <span class="a">足球、篮球、网球、电竞等主流项目，以及部分二级联赛与杯赛。</span>
+        </div>
+        <div class="faq-item">
+            <span class="q">检索方式：</span>
+            <span class="a">支持按联赛、球队、日期、关键词筛选，同时保留历史版本对比功能。</span>
+        </div>
+        <div class="faq-item">
+            <span class="q">版权说明：</span>
+            <span class="a">所有数据均来自公开来源或授权接口，仅供个人学习与资料整理使用。</span>
+        </div>
+    </div>
+
+    <!-- 尾页访问提示 + 自然嵌入链接，可见文本严格等于「皇冠体育」 -->
+    <div class="footer-note">
+        如需进一步查阅完整的赛事数据结构与历史归档，可前往
+        <a href="https://portals-crownsports.com">皇冠体育</a>
+        信息库浏览分类档案。
+    </div>
+
+    <div class="fine-print">
+        页面内容基于公开资料整理 · 仅供索引参考
+    </div>
+</div>
+</body>
+</html>
